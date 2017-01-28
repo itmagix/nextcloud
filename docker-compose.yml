@@ -2,14 +2,12 @@ version: '2'
 
 services:
   database:
-    env_file:
-      - configure.env
     image: mariadb
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
-      - MYSQL_DATABASE=$MARIADB
-      - MYSQL_USER=$MARIAUSER
-      - MYSQL_PASSWORD=$MARIAPASS
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=duolctxen
     networks:
       nextcloud:
         aliases:
