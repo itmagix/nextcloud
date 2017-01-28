@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+  database:
+    env_file:
+      - configure.env
+    image: mariadb
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=$MARIADB
+      - MYSQL_USER=$MARIAUSER
+      - MYSQL_PASSWORD=$MARIAPASS
+    networks:
+      nextcloud:
+        aliases:
+          - database
+    volumes:
+      - /mnt/Configs/next/database:/var/lib/mysql
+    restart: always
+
+  nexcloud:
+    image: nextcloud
+    networks:
+      nextcloud:
+        aliases:
+          - nextcloud
+    ports:
+      - "80:80"
+    volumes:
+      - /mnt/Configs/next:/var/www/html
+      - /mnt/Nextcloud:/var/www/html/data
+    links:
+      - database
+    restart: always
+
+networks:
+  nextcloud:
